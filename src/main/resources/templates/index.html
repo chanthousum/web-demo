@@ -1,0 +1,52 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--	<title th:text="#{welcome.title}">Default Title</title>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--	<form th:action="add" method="post">-->
+<!--		Num1:<input type="text" name="num1"><br /><br />-->
+<!--		Num2:<input type="text" name="num2"><br /><br />-->
+<!--		<input type="submit" value="Ok" />-->
+<!--	</form>-->
+
+<!--	&lt;!&ndash;/*@thymesVar id="user" type=""*/&ndash;&gt;-->
+<!--	<div th:object="${user}">-->
+<!--		<p th:text="${user.getName()}"></p>-->
+<!--	</div>-->
+<!--	<p th:text="#{welcome.message(${userName})}"></p>-->
+<!--</body>-->
+
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+<head>
+    <title>My App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="~{layout/header :: header}"></div>
+    <div class="row">
+        <div th:replace="~{layout/main-sidebar :: main-sidebar}"></div>
+        <span layout:fragment="content">
+
+        </span>
+    </div>
+    <div th:replace="~{layout/footer :: footer}"></div>
+
+</div>
+
+</body>
+</html>
+

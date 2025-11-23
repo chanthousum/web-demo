@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}">
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script>
+        setTimeout(function() {
+            document.getElementById('alertMessage')?.remove();
+        }, 1000); // hide after 3 seconds
+    </script>
+</head>
+<body>
+<div layout:fragment="content" class="col-sm-9 content">
+    <form class="form-horizontal" th:action="@{/user/update/{id}(id=${user.getId()})}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="control-label col-sm-2">User Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" th:value="${user.getUserName()}" name="userName" placeholder="Enter Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" >Password:</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" th:value="${user.getPassword()}" name="password" placeholder="Enter password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Gender:</label>
+            <div class="col-sm-4">
+                <div class="radio">
+                    <label>
+                        <input  type="radio" name="gender"  value="Male" th:checked="${user.getGender()=='Male'}"> Male
+                    </label>
+                    <label>
+                        <input type="radio" name="gender"  value="Female" th:checked="${user.getGender()=='Female'}"> Female
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Date Of Birth:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" th:value="${user.getDateOfBirth()}" name="dateOfBirth">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" >Address:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="address"  th:value="${user.getAddress()}"placeholder="Enter Address">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" >Photo:</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" name="file">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Role Name:</label>
+            <div class="col-sm-4">
+                <select class="form-control"  name="roleName">
+                    <option value="ADMIN" th:selected="${user.getRoleName()=='ADMIN'}">ADMIN</option>
+                    <option value="USER" th:selected="${user.getRoleName()=='USER'}">USER</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a th:href="@{/user/}">Back to list</a>
+
+                <div th:if="${success}" class="alert alert-success" id="alertMessage">
+                    <span th:text="${success}"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+</body>
+</html>

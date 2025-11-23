@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}">
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<div layout:fragment="content" class="col-sm-9 content">
+        <a th:href="@{/user/show}">Add User</a>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>User Name</th>
+                    <th>Password</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Address</th>
+                    <th>Photo</th>
+                    <th>Role Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item :${users}">
+                <td th:text="${item.getId()}">001</td>
+                <td  th:text="${item.getUserName()}">User Name</td>
+                <td th:text="${item.getPassword()}">Password</td>
+                <td th:text="${item.getGender()}">Gender</td>
+                <td th:text="${item.getDateOfBirth()}">DOB</td>
+                <td th:text="${item.getAddress()}">Address</td>
+                <td>
+                    <span th:if="${item.getPhoto() != '' and item.getPhoto() != null}">
+                        <img th:src="@{'/uploads/'+${item.getPhoto()}}" width="50">
+                    </span>
+                    <span th:unless="${item.getPhoto() == '' or item.getPhoto() == null}">
+                        <p>No photo</p>
+                    </span>
+
+                </td>
+                <td th:text="${item.getRoleName()}">Role Name</td>
+                <td>
+                    <a th:href="@{/user/edit/{id}(id=${item.id})}">Edit</a>
+                    <a>View</a>
+                    <a th:href="@{/user/delete/{id}(id=${item.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+</body>
+</html>
