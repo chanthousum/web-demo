@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}">
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<div layout:fragment="content" class="col-sm-9 content">
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="@{/product/show}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New</a>
+        </div>
+        <div class="col-sm-4">
+            <form method="post" th:action="@{/product/search}">
+                <input type="search" name="search" class="form-control" placeholder="Search Item..">
+            </form>
+        </div>
+    </div>
+    <br>
+    <table class="table table-condensed">
+        <thead>
+        <tr style="background-color:green;color:white;">
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Sell Price</th>
+            <th>Unit Instock</th>
+            <th>Address</th>
+            <th>Photo</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item,userSate :${products}">
+            <td th:text="${userSate.count}">001</td>
+            <td th:text="${item.getName()}">User Name</td>
+            <td th:text="${item.getBarcode()}">Password</td>
+            <td th:text="${item.getSellprice()}">Gender</td>
+            <td th:text="${item.getUnitinstock()}">DOB</td>
+            <td th:text="${item.getPhoto()}">Address</td>
+            <td>
+                        <img th:if="${item.getPhoto() != '' and item.getPhoto() != null}" th:src="@{'/uploads/'+${item.getPhoto()}}" width="50">
+            </td>
+            <td>
+                <a th:href="@{/product/edit/{id}(id=${item.getId()})}" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                <a class="btn btn-success">
+                    <span class="glyphicon glyphicon-eye-open"></span>View</a>
+                <button type="button" th:onclick="|confirmDelete('/product/delete/' + ${item.id})|"        class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPages>1}">
+         <div class="row">
+            <div class="col-sm-2">
+                Total Rows:[[${totalItems}]]
+            </div>
+             <div class="col-sm-4">
+                 <span th:each="i :${#numbers.sequence(1,totalPages)}">
+                    <a th:if="${currentPage!=i}" th:href="@{/product/page/{pageNo}(pageNo=${i})}">[[${i}]]</a>
+                     <span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp;&nbsp;
+                 </span>
+
+                 <a th:if="${currentPage<totalPages}" th:href="@{/product/page/{pageNo}(pageNo=${currentPage +1 })}">Next</a>
+                 <span th:unless="${currentPage<totalPages}">Next</span> &nbsp;&nbsp;
+
+                 <a th:if="${currentPage<totalPages}" th:href="@{/product/page/{pageNo}(pageNo=${totalPages })}">Last</a>
+                 <span th:unless="${currentPage<totalPages}">Last</span> &nbsp;&nbsp;
+             </div>
+
+         </div>
+
+    </div>
+</div>
+</body>
+</html>

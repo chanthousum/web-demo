@@ -1,25 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-
-<!--<head>-->
-<!--	<title th:text="#{welcome.title}">Default Title</title>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--	<form th:action="add" method="post">-->
-<!--		Num1:<input type="text" name="num1"><br /><br />-->
-<!--		Num2:<input type="text" name="num2"><br /><br />-->
-<!--		<input type="submit" value="Ok" />-->
-<!--	</form>-->
-
-<!--	&lt;!&ndash;/*@thymesVar id="user" type=""*/&ndash;&gt;-->
-<!--	<div th:object="${user}">-->
-<!--		<p th:text="${user.getName()}"></p>-->
-<!--	</div>-->
-<!--	<p th:text="#{welcome.message(${userName})}"></p>-->
-<!--</body>-->
-
-<!--</html>-->
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
@@ -32,8 +10,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- GLOBAL SweetAlert Handler -->
+    <script>
+        function showAlert(type, message) {
+            Swal.fire({
+                icon: type,
+                text: message,
+                confirmButtonText: 'OK',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    </script>
 </head>
 <body>
+<script>
+    function confirmDelete(url) {
+        Swal.fire({
+            //title: 'Are you sure?',
+            text: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+</script>
+
+<!-- SUCCESS -->
+<script th:if="${success}">
+    showAlert('success', '[[${success}]]');
+</script>
+
+<!-- ERROR -->
+<script th:if="${error}">
+    showAlert('error', '[[${error}]]');
+</script>
 
 <div class="container">
     <div th:replace="~{layout/header :: header}"></div>
